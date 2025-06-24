@@ -10,6 +10,7 @@ jobs:
   backend:
     name: 🔍 Backend – Django Check
     runs-on: ubuntu-latest
+    environment: development
 
     defaults:
       run:
@@ -35,7 +36,7 @@ jobs:
   frontend:
     name: 🎨 Frontend – Next.js Build
     runs-on: ubuntu-latest
-
+    environment: development
     defaults:
       run:
         working-directory: frontend
@@ -58,7 +59,7 @@ jobs:
   lint-frontend:
       name: 🎯 Lint Frontend – ESLint
       runs-on: ubuntu-latest
-
+      environment: development
       defaults:
         run:
           working-directory: frontend
