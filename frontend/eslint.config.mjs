@@ -15,7 +15,7 @@ export default [
       "react-hooks": reactHooks,
     },
     rules: {
-      ...next.configs["core-web-vitals"].rules,
+      ...(next.configs?.["core-web-vitals"]?.rules || {}),
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
     },
