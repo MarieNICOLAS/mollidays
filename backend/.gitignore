@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+*.venv
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+.eggs/
+*.log
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# System
+Thumbs.db
+
+# dotenv
+.env
+.env.*
+
+# SQLite
+*.sqlite3
+*.db
+
+# Node
+node_modules/
+
+# Coverage
+.coverage
+htmlcov/
+.coverage.*
+
+# Migrations
+migrations/
+*/migrations/
+
+# Test
+*.pytest_cache/
+.pytest_cache/
+.cache/
+.nox/
+.tox/
+.coverage
+
+# Others
+*.bak
+*.swp
+*.swo
+.idea/
+*.iml
