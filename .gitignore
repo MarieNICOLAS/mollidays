@@ -1,0 +1,50 @@
+# === PYTHON / DJANGO ===
+venv/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+db.sqlite3
+*.sqlite3
+
+# Migrations (optionnel)
+**/migrations/
+!*/migrations/__init__.py
+
+# === NODE / NEXT.JS ===
+node_modules/
+.next/
+out/
+
+# === ENVIRONNEMENT ===
+.env*
+!.env.example
+
+# === DOCKER ===
+*.log
+*.pid
+*.seed
+docker-compose.override.yml
+
+# === IDE / SYSTÈME ===
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# === TESTS ===
+coverage/
+htmlcov/
+*.cover
+*.py,cover
+.cache
+pytest_cache/
+.noseids
+
+# === BUILD / DIST ===
+build/
+dist/
+*.egg-info/
+
+# === JENKINS / CI/CD ===
+jenkins_output/
