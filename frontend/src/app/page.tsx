@@ -1,103 +1,248 @@
-import Image from "next/image";
 
-export default function Home() {
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ChevronRight, MapPin, Calendar, Search, Heart, Users, Globe } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import Hero from "@/components/Hero";
+import TripCard from "@/components/TripCard";
+
+const Index = () => {
+  const [destination, setDestination] = useState("");
+  const [featuredTrips, setFeaturedTrips] = useState([
+    {
+      id: "bali-adventure",
+      title: "L'aventure balinaise",
+      destination: "Bali",
+      image: "https://images.unsplash.com/photo-1555400038-63f5ba517a47?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80",
+      duration: 12,
+      price: 1890,
+      date: "10 mars 2024",
+      spots: 4,
+      activities: ["Culture", "Nature", "Aventure"]
+    },
+    {
+      id: "bali-wellness",
+      title: "Bien-être à Bali",
+      destination: "Bali",
+      image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80",
+      duration: 10,
+      price: 2190,
+      date: "15 avril 2024",
+      spots: 6,
+      activities: ["Bien-être", "Culture", "Relaxation"]
+    },
+    {
+      id: "bali-cuisine",
+      title: "Délices culinaires balinais",
+      destination: "Bali",
+      image: "https://images.unsplash.com/photo-1581719608267-0921cf352842?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80",
+      duration: 9,
+      price: 1790,
+      date: "5 mai 2024",
+      spots: 5,
+      activities: ["Cuisine", "Culture", "Artisanat"]
+    }
+  ]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log("Searching for:", destination);
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <Hero />
+      
+      {/* Search Section */}
+      <section className="relative z-10 mx-auto max-w-5xl px-4 -mt-24">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="glass-card rounded-2xl shadow-lg overflow-hidden"
+        >
+          <div className="p-6 md:p-8">
+            <h2 className="text-2xl font-semibold mb-6 text-center">Trouvez votre prochaine aventure avec Mo'lidays</h2>
+            
+            <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center">
+                  <MapPin className="w-4 h-4 mr-1 text-coral" />
+                  Destination
+                </label>
+                <Select value={destination} onValueChange={setDestination}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choisir une destination" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="bali">Bali</SelectItem>
+                    <SelectItem value="thailand" disabled>Thaïlande (Bientôt)</SelectItem>
+                    <SelectItem value="vietnam" disabled>Vietnam (Bientôt)</SelectItem>
+                    <SelectItem value="japon" disabled>Japon (Bientôt)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center">
+                  <Calendar className="w-4 h-4 mr-1 text-coral" />
+                  Dates
+                </label>
+                <Input type="month" min={new Date().toISOString().slice(0, 7)} />
+              </div>
+              
+              <Button type="submit" className="self-end" variant="coral">
+                <Search className="w-4 h-4 mr-2" />
+                Rechercher
+              </Button>
+            </form>
+          </div>
+        </motion.div>
+      </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      {/* Why Choose Mo'lidays Section */}
+      <section className="container mx-auto px-4 py-20">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl font-bold mb-4">Pourquoi choisir Mo'lidays ?</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Mo'lidays révolutionne les voyages en famille en créant des expériences uniques 
+            pour parents et enfants adultes
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-center p-6"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <div className="bg-coral/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <Heart className="w-8 h-8 text-coral" />
+            </div>
+            <h3 className="text-xl font-semibold mb-3">Expériences authentiques</h3>
+            <p className="text-gray-600">
+              Des voyages immersifs qui privilégient les rencontres locales et les moments de partage
+            </p>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-center p-6"
           >
-            Read our docs
-          </a>
+            <div className="bg-coral/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <Users className="w-8 h-8 text-coral" />
+            </div>
+            <h3 className="text-xl font-semibold mb-3">Petits groupes</h3>
+            <p className="text-gray-600">
+              Maximum 6 duos parents-enfants pour garantir une ambiance familiale et des liens durables
+            </p>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-center p-6"
+          >
+            <div className="bg-coral/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <Globe className="w-8 h-8 text-coral" />
+            </div>
+            <h3 className="text-xl font-semibold mb-3">Tourisme responsable</h3>
+            <p className="text-gray-600">
+              Engagement éthique envers les communautés locales et respect de l'environnement
+            </p>
+          </motion.div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+      
+      {/* Featured Trips Section */}
+      <section className="container mx-auto px-4 py-20">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
+          <div>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-3xl font-bold mb-2"
+            >
+              Nos circuits à la une
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-gray-600"
+            >
+              Voyages immersifs parents-enfants adultes avec Mo'lidays
+            </motion.p>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <Button variant="outline" className="mt-4 sm:mt-0" asChild>
+              <Link to="/trips">
+                Voir tous les circuits
+                <ChevronRight className="ml-1 h-4 w-4" />
+              </Link>
+            </Button>
+          </motion.div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featuredTrips.map((trip, index) => (
+            <TripCard key={trip.id} {...trip} delay={index} />
+          ))}
+        </div>
+      </section>
+      
+      {/* CTA Section */}
+      <section className="bg-gradient-to-r from-coral to-coral-dark text-white py-16">
+        <div className="container mx-auto px-4 text-center">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Prêt pour votre prochaine aventure Mo'lidays ?</h2>
+            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              Des souvenirs inoubliables vous attendent entre parents et enfants adultes.
+            </p>
+            <Button 
+              size="lg" 
+              variant="secondary"
+              className="bg-white text-coral hover:bg-cream"
+              asChild
+            >
+              <Link to="/trips">
+                Découvrir nos circuits
+                <ChevronRight className="ml-1 h-4 w-4" />
+              </Link>
+            </Button>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
-}
+};
+
+export default Index;
